@@ -11,9 +11,9 @@ void data_decode() {
   pressure  = strtok(NULL, ",");
   humi      = strtok(NULL, ",");
   CO2       = strtok(NULL, ",");
-  flat      = strtok(NULL, ",");
-  flon      = strtok(NULL, ",");
-  alti      = strtok(NULL, ",");
+//  flat      = strtok(NULL, ",");
+//  flon      = strtok(NULL, ",");
+//  alti      = strtok(NULL, ",");
   EC        = strtok(NULL, ",");
   TDS       = strtok(NULL, ",");
   SAL       = strtok(NULL, ",");
@@ -36,7 +36,7 @@ void data_decode() {
 
   Serial.println("Recording data.");
 
-  sprintf(query, INSERT_DATA, date, times, temp, K_temp, pressure, humi, CO2, flat, flon, EC, TDS, SAL, GRAV, pH);
+  sprintf(query, INSERT_DATA, date, times, temp, K_temp, pressure, humi, CO2, EC, TDS, SAL, GRAV, pH);
 //  Serial.println(query);
 
   MySQL_Cursor *cur_mem = new MySQL_Cursor(&database);

@@ -2,8 +2,8 @@
 #include <SPI.h>
 #include <MySQL_Connection.h>
 #include <MySQL_Cursor.h>
-#define STASSID "kiyohime"
-#define STAPSK  "wakaba0331"
+#define STASSID "CAGD-LAB"
+#define STAPSK  "1102049733"
 
 String inputstring = "";
 boolean input_complete = false;
@@ -17,7 +17,7 @@ const char* pass = STAPSK;
 WiFiClient client;            // Use this for WiFi instead of EthernetClient
 MySQL_Connection database((Client *)&client);
 //char INSERT_DATA[] = "INSERT INTO drifter.sensor_01 (D,T,TP,KTP,P,H,C,FA,FO,EC,TDS,SAL,GRAV,pH) VALUES ('%s','%s',%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)";
-char INSERT_DATA[] = "INSERT INTO drifter.sensor_01 (date,time,temperature,K_temperature,pressure,humidity,valCO2,flat,flon,EC,TDS,SAL,GRAV,pH) VALUES ('%s','%s',%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)";
+char INSERT_DATA[] = "INSERT INTO drifter.sensor_01 (date,time,temperature,K_temperature,pressure,humidity,valCO2,EC,TDS,SAL,GRAV,pH) VALUES ('%s','%s',%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)";
 char query[512];
 
 String date_S, time_S;
@@ -32,7 +32,7 @@ void setup() {
   inputstring.reserve(110);
   delay(500);
   
-  setting_mode();
+  //setting_mode();
   WiFi_connect();
   DB_connect();
 }
