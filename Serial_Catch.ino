@@ -26,3 +26,9 @@ void input_clear() {
   inputstring = "";
 }
 
+void serial_flush(){
+  while(Serial.available()){
+    Serial.read();
+  }
+}
+

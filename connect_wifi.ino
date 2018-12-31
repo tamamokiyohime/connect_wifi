@@ -16,7 +16,6 @@ const char* pass = STAPSK;
 
 WiFiClient client;            // Use this for WiFi instead of EthernetClient
 MySQL_Connection database((Client *)&client);
-//char INSERT_DATA[] = "INSERT INTO drifter.sensor_01 (D,T,TP,KTP,P,H,C,FA,FO,EC,TDS,SAL,GRAV,pH) VALUES ('%s','%s',%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)";
 char INSERT_DATA[] = "INSERT INTO drifter.sensor_01 (date,time,temperature,K_temperature,pressure,humidity,valCO2,EC,TDS,SAL,GRAV,pH) VALUES ('%s','%s',%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)";
 char query[512];
 
@@ -31,19 +30,23 @@ void setup() {
   digitalWrite(LED_BUILTIN, HIGH);
   inputstring.reserve(110);
   delay(500);
-  
+
   //setting_mode();
   WiFi_connect();
-  DB_connect();
+  //DB_connect();
 }
-  
+
 
 void loop() {
   Serial_catch();
-  
+
   if (input_complete) {
+    wifi_checkconn();
+    DB_connect();
     data_decode();
     input_clear();
+    DB_disconnect();
+    serial_flush();
 
   }
 }

@@ -16,13 +16,31 @@ void WiFi_connect() {
 }
 
 void DB_connect() {
-  Serial.println("Connecting to database...");
   if (database.connect(server_addr, 3306, user, password)) {
     digitalWrite(LED_BUILTIN, LOW);
-    delay(1000);
   }
   else {
-    Serial.println("Connection failed.");
+    digitalWrite(LED_BUILTIN, HIGH);
   }
 
 }
+
+void DB_disconnect() {
+
+  database.close();
+  digitalWrite(LED_BUILTIN, HIGH);
+}
+
+void wifi_checkconn() {
+  if (WiFi.status() != WL_CONNECTED) {
+    Serial.print("Detected WiFi Disconnect, Restarting...");
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(ssid, pass);
+    while (WiFi.status() != WL_CONNECTED) {
+      delay(500);
+      Serial.print(".");
+    }
+    Serial.println();
+  }
+}
+
