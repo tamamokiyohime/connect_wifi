@@ -1,7 +1,7 @@
 void data_decode() {
   int len = inputstring.length();
   char string_array[len + 1];
-  char *date, *times, *temp, *K_temp, *pressure, *humi, *CO2, *flat, *flon, *alti, *EC, *TDS, *SAL, *GRAV, *pH;
+  char *date, *times, *temp, *K_temp, *pressure, *humi, *CO2, *flat, *flon, *alti, *EC, *TDS, *SAL, *GRAV, *pH, *device_ID;
 
   inputstring.toCharArray(string_array, len);
   date      = strtok(string_array, ",");
@@ -19,6 +19,7 @@ void data_decode() {
   SAL       = strtok(NULL, ",");
   GRAV      = strtok(NULL, ",");
   pH        = strtok(NULL, ",");
+  device_ID = strtok(NULL, ",");
   
   //    temp_F      = atof(temp);
   //    K_temp_F    = atof(K_temp);
@@ -33,11 +34,14 @@ void data_decode() {
   //    humi_I      = atoi(humi);
   //    CO2_I       = atoi(CO2);
   //    pH_F        = atof(pH);
-
+  Serial.print(date);
+  Serial.print(" ");
+  Serial.print(times);
+  Serial.print(" ==> ");
   Serial.println("Recording data.");
 
-  sprintf(query, INSERT_DATA, date, times, temp, K_temp, pressure, humi, CO2, EC, TDS, SAL, GRAV, pH);
-//  Serial.println(query);
+  sprintf(query, INSERT_DATA,atoi(device_ID), date, times, temp, K_temp, pressure, humi, CO2, EC, TDS, SAL, GRAV, pH);
+  //Serial.println(query);
 
   MySQL_Cursor *cur_mem = new MySQL_Cursor(&database);
   cur_mem->execute(query);

@@ -3,6 +3,7 @@ void Serial_catch() {
     char inChar = Serial.read();
     inputstring += inChar;
     boolean checksum = true;
+    int commacount = 0;
     if (inChar == '\r') {
       input_complete = true;
       for (int i = 0; i < inputstring.length() - 1; i++) {
@@ -10,14 +11,21 @@ void Serial_catch() {
           if (inputstring[i] != 44) {
             checksum = false;
           }
+          
         }
+        if( inputstring[i] == 44){
+           commacount ++; 
+          }
       }
-
+      if(commacount != 12){
+        checksum = false;
+      }
     }
     if (!checksum) {
       input_clear();
       Serial.println("String Error");
     }
+    delay(0);
   }
 }
 
